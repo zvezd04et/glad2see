@@ -13,6 +13,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.z.glad2see.R;
 import com.z.glad2see.model.DataUtils;
+import com.z.glad2see.ui.contact_list.mvp.ContactListActivity;
 
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
 
@@ -40,9 +41,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
     void initFAB(){
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-
-        });
+        fab.setOnClickListener(view -> startActivity(ContactListActivity.getStartIntent(this)));
     }
 
     private void requestPermissions() {

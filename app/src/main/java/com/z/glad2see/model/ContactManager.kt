@@ -20,7 +20,8 @@ class ContactManager {
     }
 
     fun getContacts(): List<Contact> {
-        return Contacts.getQuery().find()
+        val list = Contacts.getQuery().find()
+        return list
     }
 
     fun getContactsByPhone(number: String): List<Contact> {
