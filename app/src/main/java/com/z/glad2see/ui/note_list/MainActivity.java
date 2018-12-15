@@ -57,22 +57,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void showNews() {
-
-    }
-
-    @Override
-    public void showError(String error) {
-
+    public void showNotes() {
+        
     }
 }
