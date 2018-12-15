@@ -28,17 +28,14 @@
         android:scrollbars="vertical"
         tools:listitem="@layout/notes_list_item" />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/notes_list_add_note_fab"-->
-        <!--android:layout_width="56dp"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-
-        <!--android:src="@drawable/ic_launcher_foreground"-->
-        <!--app:backgroundTint="@android:color/holo_red_dark"-->
-        <!--app:rippleColor="#FFF"-->
-        <!--android:layout_marginRight="20dp"-->
-        <!--android:layout_marginBottom="20dp" />-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_add_fab"/>
 
 </RelativeLayout>

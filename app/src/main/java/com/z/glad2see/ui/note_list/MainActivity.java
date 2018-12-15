@@ -1,18 +1,24 @@
 package com.z.glad2see.ui.note_list;
 
-import com.arellomobile.mvp.MvpAppCompatActivity;
-import com.z.glad2see.R;
-import com.z.glad2see.model.DataUtils;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.z.glad2see.R;
+import com.z.glad2see.model.DataUtils;
+
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
+
+    @InjectPresenter
+    MainActivityPresenter mainActivityPresenter;
+
 
     private RecyclerView recyclerView;
 
@@ -21,6 +27,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_list_activity);
 
+        initFAB();
+
         recyclerView = findViewById(R.id.my_recycler_view);
         NoteListAdapter adapter = new NoteListAdapter(DataUtils.generateNotes(), this);
 
@@ -28,6 +36,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         recyclerView.setAdapter(adapter);
 
         requestPermissions();
+    }
+
+    void initFAB(){
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+
+        });
     }
 
     private void requestPermissions() {
@@ -58,6 +73,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
     @Override
     public void showNotes() {
-        
+
     }
 }
