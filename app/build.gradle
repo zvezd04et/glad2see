@@ -17,6 +17,10 @@ android {
         }
     }
     compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -26,6 +30,8 @@ ext {
     ext.support_library_version = '28.0.0'
     ext.moxy_version = '1.5.5'
     ext.room_version = "1.1.1"
+    ext.rx_permissions_version = "0.10.2"
+    ext.contacts_api_version = "1.1.7"
 }
 
 dependencies {
@@ -42,8 +48,9 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
 
     //permissions
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation "com.github.tbruyelle:rxpermissions:$rx_permissions_version"
 
     //contacts
-    implementation 'com.github.tamir7.contacts:contacts:1.1.7'
+    implementation "com.github.tamir7.contacts:contacts:$contacts_api_version"
+    implementation 'com.android.support:design:28.0.0'
 }

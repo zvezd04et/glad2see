@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">glad2see</string>
+    <string name="empty_contacts">Нет доступных контактов</string>
 </resources>
