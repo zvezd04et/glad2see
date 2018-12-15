@@ -22,7 +22,7 @@ public class Note implements Serializable {
         this.textNote = textNote;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

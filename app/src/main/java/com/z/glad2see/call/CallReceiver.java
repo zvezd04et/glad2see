@@ -33,18 +33,22 @@ public class CallReceiver extends PhonecallReceiver {
     protected void onIncomingCallStarted(Context ctx, String number, Date start) {
 
         this.ctx = ctx;
-        Disposable disposable = notesDao.getNotesByNumberSingle(number)
+        Disposable disposable = App.getContactManager().getContactIdByPhone(number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::processLoading, this::handleError);
+                .subscribe(this::processLoading,
+                        this::handleError);
         compositeDisposable.add(disposable);
 
     }
 
-    protected void processLoading(@Nullable Note note) {
-        if (note == null) {
+    protected void processLoading(@Nullable Long contactId) {
+        if (contactId == null) {
             return;
         }
+
+        //TODO Error prone
+        Note note = notesDao.getNoteById(contactId).get(0);
         String textNotes = note.getTextNote();
         showToast(ctx, "note: " + textNotes);
         Log.d(LOG_TAG, "onIncomingCallStarted");

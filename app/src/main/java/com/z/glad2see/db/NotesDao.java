@@ -17,11 +17,8 @@ public interface NotesDao {
     @Query("SELECT * FROM notes")
     List<Note> getAllNotesObservable();
 
-    @Query("SELECT * FROM notes WHERE phone_number = :number")
-    Single<Note> getNotesByNumberSingle(String number);
-
-    @Query("SELECT * FROM notes WHERE phone_number = :number")
-    Note getNotesByNumber(String number);
+    @Query("SELECT * FROM notes WHERE contact_id = :id")
+    List<Note> getNoteById(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Note> notes);
