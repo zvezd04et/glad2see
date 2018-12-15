@@ -41,12 +41,8 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.details_note_activity)
 
-        val contact = intent.getStringExtra(CONTACT_ID_KEY).deserializeTimestamps()
-        if (contact == null) {
-            presenter.finishWithError()
-        } else {
-            presenter.setData(contact!!)
-        }
+        val contactId = intent.getStringExtra(CONTACT_ID_KEY)
+        presenter.setData(contactId.toLong())
 
         initToolbar()
         initViews()
@@ -67,18 +63,12 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         return super.onSupportNavigateUp()
     }
 
-    private fun String?.deserializeTimestamps(): Contact? {
-        val type = object : TypeToken<Contact>() {}.type
-        return Gson().fromJson(this, type)
-    }
-
     companion object {
         const val CONTACT_ID_KEY = "CONTACT_ID_KEY"
 
-        fun getIntent(context: Context, contact: Contact): Intent {
-            val json = Gson().toJson(contact)
+        fun getIntent(context: Context, contactId: Long): Intent {
             return Intent(context, EditContactActivity::class.java)
-                .putExtra(CONTACT_ID_KEY, json)
+                .putExtra(CONTACT_ID_KEY, contactId)
         }
     }
 }

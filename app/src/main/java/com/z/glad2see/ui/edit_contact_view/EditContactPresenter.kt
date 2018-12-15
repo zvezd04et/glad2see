@@ -7,16 +7,13 @@ import com.z.glad2see.model.Note
 
 class EditContactPresenter : MvpPresenter<EditContactView>() {
 
-    private val notesRepository = App.getDatabase()
+    private val notesRepository = App.getDatabase().notesDao
+    private val contactManager = App.getContactManager()
 
-    private lateinit var contact: Contact
-
-    fun finishWithError() {
-        viewState.showErrorInfoAndFinish()
-    }
+    private var contact: Contact? = null
 
     fun saveChanges(noteTxt: String) {
-        notesRepository.notesDao.insert(Note(contact.id, noteTxt))
+        notesRepository.insert(Note(contact!!.id, noteTxt))
         viewState.navigateToMainScreen()
     }
 
@@ -24,9 +21,13 @@ class EditContactPresenter : MvpPresenter<EditContactView>() {
         viewState.navigateBack()
     }
 
-    fun setData(contact: Contact) {
-        this.contact = contact
-        viewState.displayDetails(contact)
+    fun setData(contactId: Long) {
+        this.contact = contactManager.getContactById(contactId)[0]
+        if (contact == null) {
+            viewState.showErrorInfoAndFinish()
+        } else {
+            viewState.displayDetails(contact!!)
+        }
     }
 
 }

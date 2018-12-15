@@ -45,6 +45,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     }
 
     private void requestPermissions() {
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=
                 PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,

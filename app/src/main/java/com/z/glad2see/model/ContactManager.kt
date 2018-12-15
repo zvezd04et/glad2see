@@ -29,4 +29,10 @@ class ContactManager {
             .whereEqualTo(Contact.Field.PhoneNumber, number)
             .find()
     }
+
+    fun getContactById(contactId: Long): List<Contact> {
+        return Contacts.getQuery()
+            .whereEqualTo(Contact.Field.ContactId, contactId)
+            .find()
+    }
 }
