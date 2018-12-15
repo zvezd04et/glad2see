@@ -1,11 +1,25 @@
 package com.z.glad2see.model;
 
-public class Note {
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
+@Entity(tableName = "notes")
+public class Note implements Serializable {
+
+    @ColumnInfo(name = "id")
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "phone_number")
     private String number;
+    @ColumnInfo(name = "contact")
     private String contact;
+    @ColumnInfo(name = "contact_id")
     private int contactId;
+    @ColumnInfo(name = "text_note")
     private String textNote;
 
     public Note(int id, String number, String contact, int contactId, String textNote) {

@@ -1,6 +1,5 @@
 package com.z.glad2see.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
