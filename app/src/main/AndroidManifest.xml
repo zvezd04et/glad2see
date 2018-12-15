@@ -19,8 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
-        android:theme="@style/AppTheme">
         <activity android:name=".ui.NoteList.NoteListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
