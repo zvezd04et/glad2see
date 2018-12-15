@@ -24,7 +24,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactViewHolder> 
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
-        return new ContactViewHolder(inflater.inflate(R.layout.notes_list_item, viewGroup, false));
+        return new ContactViewHolder(inflater.inflate(R.layout.contacts_list_item, viewGroup, false));
     }
 
     @Override
@@ -39,5 +39,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactViewHolder> 
 
     public void setData(@NonNull List<Contact> contactList) {
         this.contactList.addAll(contactList);
+        notifyDataSetChanged();
     }
 }

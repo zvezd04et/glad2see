@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class ContactListPresenter extends MvpPresenter<ContactListView> {
 
-    private static final String TAG = "contact_list_debug";
+    public static final String TAG = "contact_list_debug";
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -21,12 +21,16 @@ public class ContactListPresenter extends MvpPresenter<ContactListView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
 
+        Log.d(TAG, "onFirstViewAttach: ");
         compositeDisposable.add(
                 App.getContactManager().getAllContacts()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                contacts -> getViewState().showContactList(contacts),
+                                contacts -> {
+                                    getViewState().showContactList(contacts);
+                                    Log.d(TAG, "onFirstViewAttach: " + contacts.size());
+                                },
                                 throwable -> Log.d(TAG, "contact loading error", throwable)
                         )
         );

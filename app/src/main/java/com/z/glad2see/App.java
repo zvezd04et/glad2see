@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.github.tamir7.contacts.Contacts;
 import com.z.glad2see.db.AppDatabase;
 import com.z.glad2see.db.NotesRepository;
 import com.z.glad2see.model.ContactManager;
@@ -40,6 +41,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Contacts.initialize(this);
         database = AppDatabase.getInstance(this);
 
         contactManager = new ContactManager();
