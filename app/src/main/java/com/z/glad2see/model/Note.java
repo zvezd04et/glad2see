@@ -12,25 +12,17 @@ public class Note implements Serializable {
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     private int id;
-
-    @ColumnInfo(name = "phone_number")
-    private String number;
-    @ColumnInfo(name = "contact")
-    private String contact;
     @ColumnInfo(name = "contact_id")
-    private int contactId;
+    private long contactId;
     @ColumnInfo(name = "text_note")
     private String textNote;
 
-    public Note(int id, String number, String contact, int contactId, String textNote) {
-        this.id = id;
-        this.number = number;
-        this.contact = contact;
+    public Note(long contactId, String textNote) {
         this.contactId = contactId;
         this.textNote = textNote;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -38,23 +30,7 @@ public class Note implements Serializable {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public int getContactId() {
+    public long getContactId() {
         return contactId;
     }
 

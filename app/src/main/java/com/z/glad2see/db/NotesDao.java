@@ -24,7 +24,10 @@ public interface NotesDao {
     Note getNotesByNumber(String number);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Note> news);
+    void insertAll(List<Note> notes);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Note note);
 
     @Query("DELETE FROM notes")
     void deleteAll();
