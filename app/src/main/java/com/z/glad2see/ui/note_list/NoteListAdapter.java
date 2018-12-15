@@ -1,4 +1,4 @@
-package com.z.glad2see.ui.NoteList;
+package com.z.glad2see.ui.note_list;
 
 import com.z.glad2see.R;
 import com.z.glad2see.model.Note;

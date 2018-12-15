@@ -1,4 +1,4 @@
-package com.z.glad2see.ui.NoteList;
+package com.z.glad2see.ui.note_list;
 
 import com.z.glad2see.R;
 import com.z.glad2see.model.DataUtils;
@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public class NoteListActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
