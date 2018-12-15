@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DataUtils {
 
-    public List<Note> generateNotes() {
+    public static List<Note> generateNotes() {
         List<Note> notes = new ArrayList<>();
         notes.add(new Note(1, "+79254073140", "Anton", 1, "Call at 10"));
         notes.add(new Note(2, "+79165766299", "Gasha", 2, "Test Room"));

@@ -41,6 +41,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$support_library_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "com.android.support:design:$support_library_version"
+    implementation "com.android.support:recyclerview-v7:$support_library_version"
 
     implementation "com.arello-mobile:moxy:$moxy_version"
     implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
