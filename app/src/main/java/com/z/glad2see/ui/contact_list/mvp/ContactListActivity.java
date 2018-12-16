@@ -82,7 +82,9 @@ public class ContactListActivity extends MvpAppCompatActivity implements Contact
 
     @Override
     public void openContactEditorActivity(final long contactId) {
-        startActivityForResult(EditContactActivity.getIntent(this, contactId), REQUEST_CODE);
+        Intent intent = EditContactActivity.getIntent(this, contactId);
+        intent.putExtra(EditContactActivity.CONTACT_NOTE_HAVE_KEY, false);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
