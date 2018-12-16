@@ -7,15 +7,18 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.z.glad2see.R;
+import com.z.glad2see.model.Note;
 import com.z.glad2see.ui.contact_list.mvp.ContactListActivity;
 import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
 
@@ -23,6 +26,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     MainActivityPresenter mainActivityPresenter;
 
     private RecyclerView recyclerView;
+    private NoteListAdapter adapter;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ContactListActivity.class);
@@ -37,7 +41,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
         recyclerView = findViewById(R.id.my_recycler_view);
         NoteListAdapter.OnItemClickListener clickListener = contactId -> mainActivityPresenter.onItemClicked(contactId);
-        NoteListAdapter adapter = new NoteListAdapter(new ArrayList<>(), this, clickListener);
+        adapter = new NoteListAdapter(new ArrayList<>(), this, clickListener);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -60,8 +64,19 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     }
 
     @Override
-    public void showNotes() {
+    protected void onResume() {
+        super.onResume();
+        mainActivityPresenter.updateNoteList();
+    }
 
+    @Override
+    public void showNotes(List<Note> notes) {
+        adapter.setData(notes);
+    }
+
+    @Override
+    public void showState(String state) {
+        Toast.makeText(this, state, Toast.LENGTH_LONG).show();
     }
 
     @Override

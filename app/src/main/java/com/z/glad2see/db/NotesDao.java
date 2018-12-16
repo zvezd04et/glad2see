@@ -9,13 +9,11 @@ import com.z.glad2see.model.Note;
 
 import java.util.List;
 
-import io.reactivex.Single;
-
 @Dao
 public interface NotesDao {
 
     @Query("SELECT * FROM notes")
-    List<Note> getAllNotesObservable();
+    List<Note> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE contact_id = :id")
     List<Note> getNoteById(long id);

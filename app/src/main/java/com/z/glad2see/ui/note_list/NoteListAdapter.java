@@ -1,10 +1,5 @@
 package com.z.glad2see.ui.note_list;
 
-import com.github.tamir7.contacts.Contact;
-import com.z.glad2see.R;
-import com.z.glad2see.model.Note;
-import com.z.glad2see.ui.contact_list.ContactListAdapter;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.z.glad2see.R;
+import com.z.glad2see.model.Note;
 
 import java.util.List;
 
@@ -44,6 +42,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     }
 
     public void setData(@NonNull List<Note> noteList) {
+        this.noteList.clear();
         this.noteList.addAll(noteList);
         notifyDataSetChanged();
     }

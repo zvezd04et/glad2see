@@ -2,17 +2,12 @@ package com.z.glad2see;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.tamir7.contacts.Contacts;
 import com.z.glad2see.db.AppDatabase;
-import com.z.glad2see.db.NotesRepository;
 import com.z.glad2see.model.ContactManager;
-import com.z.glad2see.model.DataUtils;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class App extends Application {
 
@@ -46,10 +41,10 @@ public class App extends Application {
 
         contactManager = new ContactManager();
 
-        final Disposable disposable = NotesRepository.saveData(DataUtils.generateNotes())
-                .subscribeOn(Schedulers.io())
-                .subscribe(() -> Log.d(LOG_TAG, "Success"));
-        compositeDisposable.add(disposable);
+//        final Disposable disposable = NotesRepository.saveData(DataUtils.generateNotes())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(() -> Log.d(LOG_TAG, "Success"));
+//        compositeDisposable.add(disposable);
     }
 
 }

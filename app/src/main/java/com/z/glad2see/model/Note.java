@@ -2,11 +2,12 @@ package com.z.glad2see.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "notes")
+@Entity(tableName = "notes", indices = {@Index(value = {"contact_id"}, unique = true)})
 public class Note implements Serializable {
 
     @ColumnInfo(name = "id")
