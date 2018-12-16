@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.text.Editable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -12,8 +13,13 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.github.tamir7.contacts.Contact
+import com.z.glad2see.App
 import com.z.glad2see.R
+import com.z.glad2see.model.Note
 import com.z.glad2see.ui.contact_list.mvp.ContactListPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.details_note_activity.*
 
 class EditContactActivity : MvpAppCompatActivity(), EditContactView {
@@ -30,8 +36,8 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
     }
 
     override fun displayDetails(contact: Contact) {
-        full_name_text_view.text = "${contact.givenName} ${contact.familyName}"
-        phone_text_view.text = "${contact.phoneNumbers.takeIf { it.isNotEmpty() }!![0]}"
+        full_name_text_view.text = "${contact.givenName} ${contact.familyName.takeIf { it != null }}"
+        phone_text_view.text = "${contact.phoneNumbers[0].number}"
     }
 
     override fun navigateToMainScreen() {
@@ -53,6 +59,14 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         presenter.setData(contactId)
 
         initToolbar()
+        val dispose = App.getDatabase().notesDao.getNoteById(contactId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ note ->
+                    if (note != null) {
+                        note_edit_txt.setText(note.textNote)
+                    }
+                }, {})
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
