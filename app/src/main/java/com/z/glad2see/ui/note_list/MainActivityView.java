@@ -6,4 +6,6 @@ public interface MainActivityView extends MvpView {
 
     void showNotes();
 
+    void openContactEditorActivity(long contactId);
+
 }

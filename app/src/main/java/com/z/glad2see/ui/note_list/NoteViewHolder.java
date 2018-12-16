@@ -15,14 +15,12 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public NoteViewHolder(@NonNull final View itemView) {
+    public NoteViewHolder(@NonNull final View itemView, NoteListAdapter.OnItemClickListener clickListener) {
         super(itemView);
         idTextView = itemView.findViewById(R.id.title_text_view);
         noteTextView = itemView.findViewById(R.id.notes_text_view);
 
-        itemView.setOnClickListener(v -> {
-            //TODO click
-        });
+       // itemView.setOnClickListener(v -> clickListener.onItemClick((.get(getAdapterPosition())).getId()));
     }
 
     public void bind(@NonNull Note noteItem) {

@@ -1,6 +1,8 @@
 package com.z.glad2see.ui.note_list;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +12,9 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.z.glad2see.R;
-import com.z.glad2see.model.DataUtils;
-import com.z.glad2see.ui.contact_list.mvp.ContactListActivity;
+import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
+
+import java.util.ArrayList;
 
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
 
@@ -19,6 +22,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     MainActivityPresenter mainActivityPresenter;
 
     private RecyclerView recyclerView;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, EditContactActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +35,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         initFab();
 
         recyclerView = findViewById(R.id.my_recycler_view);
-        NoteListAdapter adapter = new NoteListAdapter(DataUtils.generateNotes(), this);
+        NoteListAdapter.OnItemClickListener clickListener = contactId -> mainActivityPresenter.onItemClicked(contactId);
+        NoteListAdapter adapter = new NoteListAdapter(new ArrayList<>(), this, clickListener);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -42,7 +50,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
                     .subscribe(isGranted ->
                             {
                                 if (isGranted) {
-                                    startActivity(ContactListActivity.getStartIntent(this));
+                                    startActivity(MainActivity.getStartIntent(this));
                                 }
                             },
                             Throwable::printStackTrace
@@ -53,5 +61,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     @Override
     public void showNotes() {
 
+    }
+
+    @Override
+    public void openContactEditorActivity(long contactId) {
+        startActivity(EditContactActivity.getIntent(this, contactId));
     }
 }
