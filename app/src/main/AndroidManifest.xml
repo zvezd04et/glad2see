@@ -26,7 +26,6 @@
         <activity android:name=".ui.note_list.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,6 +34,10 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
 
         <receiver android:name=".call.CallReceiver">
+        <activity android:name=".ui.edit_contact_view.EditContactActivity" />
+        <activity android:name=".ui.contact_list.mvp.ContactListActivity" />
+
+        <receiver android:name=".call.CallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>

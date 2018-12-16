@@ -12,11 +12,10 @@ public class NotesRepository {
 
     private static NotesDao notesDao = App.getDatabase().getNotesDao();
 
-    public static Completable saveData(final List<Note> newsList) {
+    public static Completable saveData(final List<Note> notes) {
         return Completable.fromCallable((Callable<Void>) () -> {
             notesDao.deleteAll();
-            notesDao.insertAll(newsList);
-
+            notesDao.insertAll(notes);
             return null;
         });
     }

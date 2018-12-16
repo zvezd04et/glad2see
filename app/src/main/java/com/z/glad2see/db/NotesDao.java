@@ -9,22 +9,20 @@ import com.z.glad2see.model.Note;
 
 import java.util.List;
 
-import io.reactivex.Single;
-
 @Dao
 public interface NotesDao {
 
     @Query("SELECT * FROM notes")
-    List<Note> getAllNotesObservable();
+    List<Note> getAllNotes();
 
-    @Query("SELECT * FROM notes WHERE phone_number = :number")
-    Single<Note> getNotesByNumberSingle(String number);
-
-    @Query("SELECT * FROM notes WHERE phone_number = :number")
-    Note getNotesByNumber(String number);
+    @Query("SELECT * FROM notes WHERE contact_id = :id")
+    List<Note> getNoteById(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Note> news);
+    void insertAll(List<Note> notes);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Note note);
 
     @Query("DELETE FROM notes")
     void deleteAll();

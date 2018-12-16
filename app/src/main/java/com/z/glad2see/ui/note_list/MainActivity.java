@@ -1,9 +1,8 @@
 package com.z.glad2see.ui.note_list;
 
-import com.z.glad2see.R;
-import com.z.glad2see.model.DataUtils;
-
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -11,88 +10,87 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.z.glad2see.R;
+import com.z.glad2see.model.Note;
+import com.z.glad2see.ui.contact_list.mvp.ContactListActivity;
+import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
+
+    @InjectPresenter
+    MainActivityPresenter mainActivityPresenter;
 
     private RecyclerView recyclerView;
+    private NoteListAdapter adapter;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, ContactListActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_list_activity);
 
+        initFab();
+
         recyclerView = findViewById(R.id.my_recycler_view);
-        NoteListAdapter adapter = new NoteListAdapter(DataUtils.generateNotes(), this);
+        NoteListAdapter.OnItemClickListener clickListener = contactId -> mainActivityPresenter.onItemClicked(contactId);
+        adapter = new NoteListAdapter(new ArrayList<>(), this, clickListener);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-            }
-        }
+    void initFab() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            RxPermissions rxPermissions = new RxPermissions(this);
+            rxPermissions.request(Manifest.permission.READ_CONTACTS)
+                    .subscribe(isGranted ->
+                            {
+                                if (isGranted) {
+                                    startActivity(MainActivity.getStartIntent(this));
+                                }
+                            },
+                            Throwable::printStackTrace
+                    );
+        });
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) !=
-                PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CALL_LOG)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALL_LOG}, 1);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALL_LOG}, 1);
-            }
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainActivityPresenter.updateNoteList();
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) !=
-                PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW}, 1);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW}, 1);
-            }
-        }
+    @Override
+    public void showNotes(List<Note> notes) {
+        adapter.setData(notes);
+    }
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this.getApplicationContext());
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        View dialogView = inflater.inflate(R.layout.activity_note, null);
-//        builder.setView(dialogView);
-//        final AlertDialog alert = builder.create();
-//        alert.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//
-//        int wLp = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-//                ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-//                : WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-//
-////        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            alert.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-//        } else {
-//            alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//        }
-//        alert.show();
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        Window window = alert.getWindow();
-//        lp.copyFrom(window.getAttributes());
-//        //This makes the dialog take up the full width
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        window.setAttributes(lp);
+    @Override
+    public void showState(String state) {
+        Toast.makeText(this, state, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void openContactEditorActivity(long contactId) {
+        startActivity(EditContactActivity.getIntent(this, contactId));
     }
 }

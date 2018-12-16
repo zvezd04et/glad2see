@@ -20,12 +20,19 @@ class ContactManager {
     }
 
     fun getContacts(): List<Contact> {
-        return Contacts.getQuery().find()
+        val list = Contacts.getQuery().find()
+        return list
     }
 
     fun getContactsByPhone(number: String): List<Contact> {
         return Contacts.getQuery()
             .whereEqualTo(Contact.Field.PhoneNumber, number)
+            .find()
+    }
+
+    fun getContactById(contactId: Long): List<Contact> {
+        return Contacts.getQuery()
+            .whereEqualTo(Contact.Field.ContactId, contactId)
             .find()
     }
 }
