@@ -36,7 +36,9 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
     }
 
     override fun displayDetails(contact: Contact) {
-        full_name_text_view.text = "${contact.givenName} ${contact.familyName.takeIf { it != null }}"
+        val firstName = contact.givenName ?: ""
+        val lastName = contact.familyName ?: ""
+        full_name_text_view.text = "$firstName $lastName"
         phone_text_view.text = "${contact.phoneNumbers[0].number}"
     }
 
