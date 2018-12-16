@@ -3,15 +3,22 @@ package com.z.glad2see.call;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.z.glad2see.utils.SupportUtils;
+
 import java.util.Date;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class PhonecallReceiver extends BroadcastReceiver {
 
     //The receiver will be recreated whenever android feels like it.  We need a static variable to remember data between instantiations
+
+
 
     private static int lastState = TelephonyManager.CALL_STATE_IDLE;
     private static Date callStartTime;
@@ -100,5 +107,10 @@ public abstract class PhonecallReceiver extends BroadcastReceiver {
                 break;
         }
         lastState = state;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 }
