@@ -6,6 +6,7 @@ import com.github.tamir7.contacts.Contact;
 import com.z.glad2see.R;
 import com.z.glad2see.model.DataUtils;
 import com.z.glad2see.ui.contact_list.ContactListAdapter;
+import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
 import com.z.glad2see.ui.note_list.NoteListAdapter;
 
 import android.content.Context;
@@ -40,13 +41,14 @@ public class ContactListActivity extends MvpAppCompatActivity implements Contact
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contacts_list_activity);
 
-
         recyclerView = findViewById(R.id.my_recycler_view);
 
-        adapter = new ContactListAdapter(new ArrayList<>(), this);
+        ContactListAdapter.OnItemClickListener clickListener = contactId -> presenter.onItemClicked(contactId);
+
+        adapter = new ContactListAdapter(new ArrayList<>(), this, clickListener);
+        recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -58,6 +60,12 @@ public class ContactListActivity extends MvpAppCompatActivity implements Contact
 
     @Override
     public void showContactList(final List<Contact> contacts) {
+        Log.d(ContactListPresenter.TAG, "showContactList: " + contacts);
         adapter.setData(contacts);
+    }
+
+    @Override
+    public void openContactEditorActivity(final long contactId) {
+        startActivity(EditContactActivity.getIntent(this, contactId));
     }
 }

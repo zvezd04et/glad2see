@@ -1,10 +1,11 @@
 package com.z.glad2see.ui.edit_contact_view
 
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.github.tamir7.contacts.Contact
 import com.z.glad2see.App
 import com.z.glad2see.model.Note
-
+@InjectViewState
 class EditContactPresenter : MvpPresenter<EditContactView>() {
 
     private val notesRepository = App.getDatabase().notesDao
