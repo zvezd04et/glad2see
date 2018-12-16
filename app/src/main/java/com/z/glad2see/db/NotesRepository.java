@@ -16,7 +16,6 @@ public class NotesRepository {
         return Completable.fromCallable((Callable<Void>) () -> {
             notesDao.deleteAll();
             notesDao.insertAll(notes);
-
             return null;
         });
     }
