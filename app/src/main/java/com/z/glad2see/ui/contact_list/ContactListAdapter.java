@@ -5,6 +5,7 @@ import com.z.glad2see.R;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,9 +68,21 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
 
         public void bind(@NonNull Contact contactItem) {
-            String fullName = contactItem.getGivenName() + " " + contactItem.getFamilyName();
+            String firstName = getNameOrEmpty(contactItem.getGivenName());
+            String lastName = getNameOrEmpty(contactItem.getFamilyName());
+            String fullName = firstName + " " + lastName;
             nameTextView.setText(fullName);
-            phoneTextView.setText(contactItem.getPhoneNumbers().get(0).getNumber());
+            if (!contactItem.getPhoneNumbers().isEmpty()) {
+                phoneTextView.setText(contactItem.getPhoneNumbers().get(0).getNumber());
+            }
+        }
+
+        @NonNull
+        private String getNameOrEmpty(final @Nullable String name) {
+            if (name != null) {
+                return name;
+            }
+            return "";
         }
 
     }
