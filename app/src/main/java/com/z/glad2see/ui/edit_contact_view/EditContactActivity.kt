@@ -3,6 +3,7 @@ package com.z.glad2see.ui.edit_contact_view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -12,6 +13,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.details_note_activity.*
 
 import com.z.glad2see.R
+import com.z.glad2see.ui.contact_list.mvp.ContactListPresenter
 import kotlinx.android.synthetic.main.notes_list_item.*
 
 class EditContactActivity : MvpAppCompatActivity(), EditContactView {
@@ -39,7 +41,9 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(ContactListPresenter.TAG, "onCreate")
         setContentView(R.layout.details_note_activity)
+
 
         val contactId = intent.getStringExtra(CONTACT_ID_KEY)
         presenter.setData(contactId.toLong())
@@ -66,6 +70,7 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
     companion object {
         const val CONTACT_ID_KEY = "CONTACT_ID_KEY"
 
+        @JvmStatic
         fun getIntent(context: Context, contactId: Long): Intent {
             return Intent(context, EditContactActivity::class.java)
                 .putExtra(CONTACT_ID_KEY, contactId)

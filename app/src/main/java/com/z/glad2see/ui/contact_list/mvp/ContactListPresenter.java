@@ -17,6 +17,10 @@ public class ContactListPresenter extends MvpPresenter<ContactListView> {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    public void onItemClicked(final long contactId) {
+        getViewState().openContactEditorActivity(contactId);
+    }
+
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
