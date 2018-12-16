@@ -12,6 +12,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.z.glad2see.R;
+import com.z.glad2see.ui.contact_list.mvp.ContactListActivity;
 import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     private RecyclerView recyclerView;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, EditContactActivity.class);
+        return new Intent(context, ContactListActivity.class);
     }
 
     @Override

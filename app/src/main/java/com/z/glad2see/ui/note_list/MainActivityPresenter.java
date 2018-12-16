@@ -26,18 +26,18 @@ public class MainActivityPresenter extends MvpPresenter<MainActivityView> {
         super.onFirstViewAttach();
 
         Log.d(TAG, "onFirstViewAttach: ");
-        compositeDisposable.add(
-                App.getContactManager().getAllContacts()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                contacts -> {
-                                    getViewState().showNotes();
-                                    Log.d(TAG, "onFirstViewAttach: " + contacts.size());
-                                },
-                                throwable -> Log.d(TAG, "contact loading error", throwable)
-                        )
-        );
+//        compositeDisposable.add(
+//                App.getContactManager().getAllContacts()
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(
+//                                contacts -> {
+//                                    getViewState().showNotes();
+//                                    Log.d(TAG, "onFirstViewAttach: " + contacts.size());
+//                                },
+//                                throwable -> Log.d(TAG, "contact loading error", throwable)
+//                        )
+//        );
     }
 
     @Override
