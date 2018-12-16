@@ -19,4 +19,11 @@ public class NotesRepository {
             return null;
         });
     }
+
+    public static Completable deleteNote(long id) {
+        return Completable.fromCallable((Callable<Void>) () -> {
+            notesDao.deleteNoteById(id);
+            return null;
+        });
+    }
 }

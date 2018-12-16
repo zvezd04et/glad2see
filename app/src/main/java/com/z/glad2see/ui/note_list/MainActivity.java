@@ -132,6 +132,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
     @Override
     public void openContactEditorActivity(long contactId) {
-        startActivity(EditContactActivity.getIntent(this, contactId));
+        Intent intent = EditContactActivity.getIntent(this, contactId);
+        intent.putExtra(EditContactActivity.CONTACT_NOTE_HAVE_KEY,true);
+        startActivity(intent);
     }
 }

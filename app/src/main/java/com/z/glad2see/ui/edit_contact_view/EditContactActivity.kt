@@ -30,6 +30,9 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
     @ProvidePresenter
     internal fun providePresenter() = EditContactPresenter()
 
+    private var isHave = false
+    private var contactId: Long = 0
+
     override fun showErrorInfoAndFinish() {
         Toast.makeText(this, R.string.no_contact_info, Toast.LENGTH_LONG).show()
         finish()
@@ -55,7 +58,8 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         setContentView(R.layout.details_note_activity)
 
 
-        val contactId = intent.getLongExtra(CONTACT_ID_KEY, -1)
+        contactId = intent.getLongExtra(CONTACT_ID_KEY, -1)
+        isHave = intent.getBooleanExtra(CONTACT_NOTE_HAVE_KEY, false)
         presenter.setData(contactId)
 
         initToolbar()
@@ -70,7 +74,12 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.details_note_activity, menu)
+        if (!isHave) {
+            menuInflater.inflate(R.menu.details_note_activity, menu)
+        } else {
+            menuInflater.inflate(R.menu.remove_menu, menu)
+        }
+
         return true
     }
 
@@ -78,6 +87,7 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         when (item?.itemId) {
             R.id.menu_item_save -> presenter.saveChanges(note_edit_txt?.text.toString())
             android.R.id.home -> onBackPressed()
+            R.id.action_remove -> presenter.removeItem(contactId)
         }
         return true
     }
@@ -98,13 +108,14 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
 
     companion object {
         const val CONTACT_ID_KEY = "CONTACT_ID_KEY"
+        const val CONTACT_NOTE_HAVE_KEY = "IS_ALREADY_HAVE"
         const val TO_MAIN_CODE = 1
         const val REQUEST_CODE = 2
 
         @JvmStatic
         fun getIntent(context: Context, contactId: Long): Intent {
             return Intent(context, EditContactActivity::class.java)
-                .putExtra(CONTACT_ID_KEY, contactId)
+                    .putExtra(CONTACT_ID_KEY, contactId)
         }
     }
 }

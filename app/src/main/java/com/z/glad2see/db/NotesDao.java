@@ -28,4 +28,7 @@ public interface NotesDao {
 
     @Query("DELETE FROM notes")
     void deleteAll();
+
+    @Query("DELETE FROM notes WHERE contact_id = :id")
+    void deleteNoteById(long id);
 }
