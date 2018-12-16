@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.z.glad2see.R;
-import com.z.glad2see.model.Note;
 
 import java.util.List;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteViewHolder> {
 
-    private final List<Note> noteList;
+    private final List<NoteItemUi> noteList;
     private final LayoutInflater inflater;
     private final OnItemClickListener clickListener;
 
-    public NoteListAdapter(@NonNull final List<Note> noteList, @NonNull final Context context, OnItemClickListener clickListener) {
+    public NoteListAdapter(@NonNull final List<NoteItemUi> noteList, @NonNull final Context context, OnItemClickListener clickListener) {
         this.noteList = noteList;
         inflater = LayoutInflater.from(context);
         this.clickListener = clickListener;
@@ -41,7 +40,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         return noteList.size();
     }
 
-    public void setData(@NonNull List<Note> noteList) {
+    public void setData(@NonNull List<NoteItemUi> noteList) {
         this.noteList.clear();
         this.noteList.addAll(noteList);
         notifyDataSetChanged();
@@ -53,22 +52,21 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView idTextView;
+        private final TextView nameTextView;
         private final TextView noteTextView;
-
 
 
         public NoteViewHolder(@NonNull final View itemView, NoteListAdapter.OnItemClickListener clickListener) {
             super(itemView);
-            idTextView = itemView.findViewById(R.id.title_text_view);
+            nameTextView = itemView.findViewById(R.id.name_text_view);
             noteTextView = itemView.findViewById(R.id.notes_text_view);
 
             itemView.setOnClickListener(v -> clickListener.onItemClick((noteList.get(getAdapterPosition())).getContactId()));
         }
 
-        public void bind(@NonNull Note noteItem) {
-            idTextView.setText(noteItem.getContactId() + "");
-            noteTextView.setText(noteItem.getTextNote());
+        public void bind(@NonNull NoteItemUi noteItem) {
+            nameTextView.setText(noteItem.getFirstName() + " " + noteItem.getFamilyName());
+            noteTextView.setText(noteItem.getNote());
         }
     }
 }

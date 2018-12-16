@@ -115,8 +115,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     }
 
     @Override
-    public void showNotes(List<Note> notes) {
-        adapter.setData(notes);
+    public void showNotes(List<NoteItemUi> itemUis) {
+        adapter.setData(itemUis);
     }
 
     @Override

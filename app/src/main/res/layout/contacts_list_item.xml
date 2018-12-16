@@ -36,7 +36,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/title_text_view"
+                    android:id="@+id/name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:hint="Владимир Бобров"
