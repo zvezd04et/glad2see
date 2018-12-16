@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.github.tamir7.contacts.Contact
 import com.z.glad2see.App
 import com.z.glad2see.model.Note
+
 @InjectViewState
 class EditContactPresenter : MvpPresenter<EditContactView>() {
 

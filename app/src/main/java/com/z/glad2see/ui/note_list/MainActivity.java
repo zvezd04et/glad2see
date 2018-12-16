@@ -18,7 +18,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     @InjectPresenter
     MainActivityPresenter mainActivityPresenter;
 
-
     private RecyclerView recyclerView;
 
     @Override
