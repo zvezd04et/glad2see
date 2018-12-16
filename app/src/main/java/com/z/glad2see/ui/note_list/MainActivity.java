@@ -31,6 +31,10 @@ import com.z.glad2see.ui.edit_contact_view.EditContactActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 public class MainActivity extends MvpAppCompatActivity implements MainActivityView {
 
     @InjectPresenter
@@ -38,6 +42,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
 
     private RecyclerView recyclerView;
     private NoteListAdapter adapter;
+
+    private CompositeDisposable subscriptions = new CompositeDisposable();
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ContactListActivity.class);
@@ -86,7 +92,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             RxPermissions rxPermissions = new RxPermissions(this);
-            rxPermissions.request(Manifest.permission.READ_CONTACTS)
+            Disposable subscription = Observable.just(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED
+            )
+                    .flatMap(isGranted -> rxPermissions.request(Manifest.permission.READ_CONTACTS))
                     .subscribe(isGranted ->
                             {
                                 if (isGranted) {
@@ -95,6 +104,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
                             },
                             Throwable::printStackTrace
                     );
+            subscriptions.add(subscription);
         });
     }
 
@@ -107,6 +117,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainActivityVi
     @Override
     public void showNotes(List<Note> notes) {
         adapter.setData(notes);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subscriptions.dispose();
     }
 
     @Override
