@@ -22,6 +22,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.z.glad2see.ui.edit_contact_view.EditContactActivity.REQUEST_CODE;
+import static com.z.glad2see.ui.edit_contact_view.EditContactActivity.TO_MAIN_CODE;
+
 public class ContactListActivity extends MvpAppCompatActivity implements ContactListView {
 
     private RecyclerView recyclerView;
@@ -66,6 +69,11 @@ public class ContactListActivity extends MvpAppCompatActivity implements Contact
 
     @Override
     public void openContactEditorActivity(final long contactId) {
-        startActivity(EditContactActivity.getIntent(this, contactId));
+        startActivityForResult(EditContactActivity.getIntent(this, contactId), REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == TO_MAIN_CODE) finish();
     }
 }
