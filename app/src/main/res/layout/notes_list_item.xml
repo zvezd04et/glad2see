@@ -47,6 +47,7 @@
                 android:id="@+id/notes_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:ellipsize="end"
                 android:hint="Вова должен мне 200р"
                 android:maxLines="1"
                 android:textSize="@dimen/indent_x2" />

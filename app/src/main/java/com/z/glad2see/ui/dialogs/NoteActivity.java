@@ -40,12 +40,8 @@ public class NoteActivity extends MvpAppCompatActivity implements NoteActivityVi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
         noteTv = findViewById(R.id.tv_note);
-
     }
-
-
 
     @Override
     protected void onPause() {
