@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -46,12 +47,24 @@ public class ContactListActivity extends MvpAppCompatActivity implements Contact
 
         recyclerView = findViewById(R.id.my_recycler_view);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         ContactListAdapter.OnItemClickListener clickListener = contactId -> presenter.onItemClicked(contactId);
 
         adapter = new ContactListAdapter(new ArrayList<>(), this, clickListener);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return true;
     }
 
     @Override
