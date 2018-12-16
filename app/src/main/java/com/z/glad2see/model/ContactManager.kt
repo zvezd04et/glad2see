@@ -6,11 +6,10 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class ContactManager {
-    fun getContactIdByPhone(number: String): Single<Long> {
-        return Single.fromCallable {
-            val contacts = getContactsByPhone(number).takeIf { it.isNotEmpty() }
-            contacts.takeIf { it!!.isNotEmpty() }!![0].id
-        }.observeOn(Schedulers.newThread())
+
+    fun getContactIdByPhone(number: String): Long {
+        val contacts = getContactsByPhone(number).takeIf { it.isNotEmpty() }
+        return contacts?.takeIf { it.isNotEmpty() }!![0].id ?: 0
     }
 
     fun getAllContacts(): Single<List<Contact>> {

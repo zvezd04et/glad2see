@@ -18,7 +18,7 @@ public interface NotesDao {
     List<Note> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE contact_id = :id")
-    Note getNoteById(long id);
+    Single<Note> getNoteById(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Note> notes);

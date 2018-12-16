@@ -15,6 +15,7 @@ import com.z.glad2see.db.NotesDao;
 import com.z.glad2see.model.Note;
 import com.z.glad2see.utils.SupportUtils;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -49,11 +50,16 @@ public class NoteActivity extends AppCompatActivity {
 
         String number = getIntent().getStringExtra(EXTRA_NUMBER);
         setTitle(number);
-        //"+79254073140"
-        //final long id = App.getContactManager().getContactIdByPhone(number);
 
-        Disposable disposable = App.getContactManager().getContactIdByPhone(number)
-                .map(id -> notesDao.getNoteById(id))
+        long contactId = 0;
+        try {
+            contactId = App.getContactManager().getContactIdByPhone(number);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            finish();
+        }
+
+        Disposable disposable = notesDao.getNoteById(contactId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::processLoading, this::handleError);
@@ -83,7 +89,6 @@ public class NoteActivity extends AppCompatActivity {
             finish();
         }
 
-//        contactTv.setText(note.getContact());
         noteTv.setText(note.getTextNote());
 
 
