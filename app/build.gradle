@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -46,11 +47,11 @@ dependencies {
 
     implementation "com.arello-mobile:moxy:$moxy_version"
     implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
-    annotationProcessor "com.arello-mobile:moxy-compiler:$moxy_version"
+    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
 
     implementation "android.arch.persistence.room:runtime:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
 
     //permissions
     implementation "com.github.tbruyelle:rxpermissions:$rx_permissions_version"

@@ -7,19 +7,20 @@ import android.util.Log
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.github.tamir7.contacts.Contact
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.details_note_activity.*
-
 import com.z.glad2see.R
 import com.z.glad2see.ui.contact_list.mvp.ContactListPresenter
+import kotlinx.android.synthetic.main.details_note_activity.*
 import kotlinx.android.synthetic.main.notes_list_item.*
 
 class EditContactActivity : MvpAppCompatActivity(), EditContactView {
 
     @InjectPresenter
     lateinit var presenter: EditContactPresenter
+
+    @ProvidePresenter
+    internal fun providePresenter() = EditContactPresenter()
 
     override fun showErrorInfoAndFinish() {
         Toast.makeText(this, R.string.no_contact_info, Toast.LENGTH_LONG).show()
@@ -45,8 +46,8 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         setContentView(R.layout.details_note_activity)
 
 
-        val contactId = intent.getStringExtra(CONTACT_ID_KEY)
-        presenter.setData(contactId.toLong())
+        val contactId = intent.getLongExtra(CONTACT_ID_KEY, -1)
+        presenter.setData(contactId)
 
         initToolbar()
         initViews()
