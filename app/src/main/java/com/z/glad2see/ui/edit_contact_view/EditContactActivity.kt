@@ -3,7 +3,10 @@ package com.z.glad2see.ui.edit_contact_view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -50,15 +53,19 @@ class EditContactActivity : MvpAppCompatActivity(), EditContactView {
         presenter.setData(contactId)
 
         initToolbar()
-        initViews()
     }
 
-    private fun initViews() {
-        save_btn.setOnClickListener {
-            presenter.saveChanges(
-                note_edit_txt?.text.toString()
-            )
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.details_note_activity, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_item_save -> presenter.saveChanges(note_edit_txt?.text.toString())
+            android.R.id.home -> onBackPressed()
         }
+        return true
     }
 
     override fun onPause() {
