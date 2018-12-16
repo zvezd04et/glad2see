@@ -9,6 +9,8 @@ import com.z.glad2see.model.Note;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 @Dao
 public interface NotesDao {
 
@@ -16,7 +18,7 @@ public interface NotesDao {
     List<Note> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE contact_id = :id")
-    List<Note> getNoteById(long id);
+    Note getNoteById(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Note> notes);

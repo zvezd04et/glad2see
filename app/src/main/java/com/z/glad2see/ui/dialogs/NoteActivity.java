@@ -50,7 +50,10 @@ public class NoteActivity extends AppCompatActivity {
         String number = getIntent().getStringExtra(EXTRA_NUMBER);
         setTitle(number);
         //"+79254073140"
-        Disposable disposable = notesDao.getNotesByNumberSingle(number)
+        //final long id = App.getContactManager().getContactIdByPhone(number);
+
+        Disposable disposable = App.getContactManager().getContactIdByPhone(number)
+                .map(id -> notesDao.getNoteById(id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::processLoading, this::handleError);
@@ -80,7 +83,7 @@ public class NoteActivity extends AppCompatActivity {
             finish();
         }
 
-        contactTv.setText(note.getContact());
+//        contactTv.setText(note.getContact());
         noteTv.setText(note.getTextNote());
 
 
