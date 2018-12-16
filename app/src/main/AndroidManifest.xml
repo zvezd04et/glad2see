@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <uses-permission
         android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
         tools:ignore="ProtectedPermissions" />
@@ -32,7 +33,7 @@
         </activity>
         <activity
             android:name=".ui.dialogs.NoteActivity"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
 
         <activity android:name=".ui.edit_contact_view.EditContactActivity" />
         <activity android:name=".ui.contact_list.mvp.ContactListActivity" />
